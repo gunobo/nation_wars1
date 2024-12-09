@@ -9,6 +9,7 @@ public void onEnable() {
     getServer().getPluginManager().registerEvents(new BrewingStandListener(), this);
     getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
     getServer().getPluginManager().registerEvents(new PersonalChestListener(), this);
+    getServer().getPluginManager().registerEvents(new RTPListener(), this);
 }
 
     @Override
