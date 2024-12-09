@@ -10,6 +10,7 @@ public void onEnable() {
     getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
     getServer().getPluginManager().registerEvents(new PersonalChestListener(), this);
     getServer().getPluginManager().registerEvents(new RTPListener(), this);
+    getServer().getPluginManager().registerEvents(new DeathBanListener(), this);
 }
 
     @Override
