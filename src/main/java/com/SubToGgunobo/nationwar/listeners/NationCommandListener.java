@@ -49,10 +49,15 @@ public class NationCommandListener implements CommandExecutor {
                     player.sendMessage("스폰 위치가 설정되어 있지 않습니다.");
                 }
                 break;
-
-            case "창고":
-                // 창고 열기 로직 추가
-                player.sendMessage("국가 창고를 열었습니다."); // 실제 창고 열기 로직 추가 필요
+                
+                case "창고":
+                if (nation != null) {
+                    Inventory inventory = Bukkit.createInventory(player, 27, nation.getName() + "의 국가 창고"); // 27 슬롯 (3줄)
+                    player.openInventory(inventory);
+                    player.sendMessage("국가 창고를 열었습니다.");
+                } else {
+                    player.sendMessage("당신은 국가에 소속되어 있지 않습니다.");
+                }
                 break;
 
             // 다른 명령어 처리
