@@ -1,5 +1,7 @@
 package com.yourname.nationwar;
 
+import org.bukkit.Location;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ public class Nation {
     private String name;
     private String color;
     private Map<String, String> members; // 플레이어 이름과 역할 매핑
+    private Location spawnLocation; // 국가 스폰 위치
 
     public Nation(String name) {
         this.name = name;
@@ -40,5 +43,13 @@ public class Nation {
 
     public void removeMember(String playerName) {
         members.remove(playerName);
+    }
+
+    public Location getSpawnLocation() {
+        return spawnLocation;
+    }
+
+    public void setSpawnLocation(Location spawnLocation) {
+        this.spawnLocation = spawnLocation;
     }
 }
