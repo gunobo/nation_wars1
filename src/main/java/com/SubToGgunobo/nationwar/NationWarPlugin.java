@@ -7,6 +7,7 @@ public class NationWarPlugin extends JavaPlugin {
 public void onEnable() {
     getLogger().info("국가전쟁 플러그인이 활성화되었습니다.");
     getServer().getPluginManager().registerEvents(new BrewingStandListener(), this);
+    getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
 }
 
     @Override
