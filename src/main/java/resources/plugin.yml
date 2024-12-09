@@ -1,1 +1,8 @@
-
+name: NationWarPlugin
+version: 1.0
+main: com.yourname.nationwar.NationWarPlugin
+api-version: 1.19
+commands:
+  국가:
+    description: 국가 관련 명령어
+    usage: /<명령어>
