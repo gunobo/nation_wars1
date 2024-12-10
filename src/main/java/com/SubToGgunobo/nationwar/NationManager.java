@@ -1,51 +1,81 @@
-package com.yourname.nationwar;
+package com.yourname.nationwar.listeners;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.yourname.nationwar.Nation;
+import com.yourname.nationwar.NationManager;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class NationManager {
-    private Map<String, Nation> nations;
+public class NationCommandListener implements CommandExecutor {
+    private NationManager nationManager;
 
-    public NationManager() {
-        nations = new HashMap<>();
+    public NationCommandListener(NationManager nationManager) {
+        this.nationManager = nationManager;
     }
 
-    public boolean createNation(String name) {
-        if (nations.containsKey(name)) {
-            return false; // 국가가 이미 존재함
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("플레이어만 이 명령어를 사용할 수 있습니다.");
+            return true;
         }
-        nations.put(name, new Nation(name));
+
+        Player player = (Player) sender;
+
+        if (args.length == 0) {
+            player.sendMessage("사용법: /국가 <명령어>");
+            return true;
+        }
+
+        Nation nation = getNationOfPlayer(player); // 플레이어가 속한 국가를 가져오는 메소드
+
+        switch (args[0].toLowerCase()) {
+            case "스폰설정":
+                if (nation != null) {
+                    String playerRole = nation.getMembers().get(player.getName());
+                    if ("국가장".equals(playerRole)) { // 국가장이어야만 설정 가능
+                        nation.setSpawnLocation(player.getLocation());
+                        player.sendMessage("국가 스폰 위치가 설정되었습니다.");
+                    } else {
+                        player.sendMessage("국가장만 스폰 위치를 설정할 수 있습니다.");
+                    }
+                } else {
+                    player.sendMessage("당신은 국가에 소속되어 있지 않습니다.");
+                }
+                break;
+
+            case "스폰":
+                if (nation != null && nation.getSpawnLocation() != null) {
+                    player.teleport(nation.getSpawnLocation());
+                    player.sendMessage("국가 스폰 위치로 이동하였습니다.");
+                } else {
+                    player.sendMessage("스폰 위치가 설정되어 있지 않습니다.");
+                }
+                break;
+
+            case "창고":
+                // 창고 열기 로직 추가
+                player.sendMessage("국가 창고를 열었습니다."); // 실제 창고 열기 로직 추가 필요
+                break;
+
+            // 다른 명령어 처리
+
+            default:
+                player.sendMessage("알 수 없는 명령어입니다.");
+                break;
+        }
+
         return true;
     }
 
-    public Nation getNation(String name) {
-        return nations.get(name);
-    }
-
-    public Map<String, Nation> getNations() {
-        return nations;
-    }
-
-    public void loadNationsFromFile(String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 2) continue; // 잘못된 형식은 무시
-
-                String nationName = parts[0].trim();
-                String leader = parts[1].trim();
-                String role = (parts.length > 2) ? parts[2].trim() : "국민"; // 역할 기본값 설정
-
-                createNation(nationName);
-                nations.get(nationName).addMember(leader, "국가장"); // 팀장 설정
-                nations.get(nationName).addMember(leader, role); // 역할 설정
+    private Nation getNationOfPlayer(Player player) {
+        for (Nation nation : nationManager.getNations().values()) {
+            if (nation.getMembers().containsKey(player.getName())) {
+                return nation; // 플레이어가 속한 국가 반환
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return null; // 국가에 속하지 않음
     }
 }
