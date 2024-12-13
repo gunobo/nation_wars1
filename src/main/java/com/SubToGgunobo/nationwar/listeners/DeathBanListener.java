@@ -49,4 +49,11 @@ public class DeathBanListener implements Listener {
         player.teleport(randomLocation);
         player.sendMessage("5분이 경과했습니다! 랜덤 위치로 텔레포트 되었습니다.");
     }
+
+    // 플레이어가 서버에서 나갈 때 데스밴 상태 제거
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        deathBanTimes.remove(player);
+    }
 }
