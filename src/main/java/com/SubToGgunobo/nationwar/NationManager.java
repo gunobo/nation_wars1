@@ -2,14 +2,13 @@ package com.yourname.nationwar.listeners;
 
 import com.yourname.nationwar.Nation;
 import com.yourname.nationwar.NationManager;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class NationCommandListener implements CommandExecutor {
-    private NationManager nationManager;
+    private final NationManager nationManager;
 
     public NationCommandListener(NationManager nationManager) {
         this.nationManager = nationManager;
@@ -56,7 +55,7 @@ public class NationCommandListener implements CommandExecutor {
                 break;
 
             case "창고":
-                // 창고 열기 로직 추가
+                // 창고 열기 로직 추가 (여기에 실제 로직을 구현해야 함)
                 player.sendMessage("국가 창고를 열었습니다."); // 실제 창고 열기 로직 추가 필요
                 break;
 
