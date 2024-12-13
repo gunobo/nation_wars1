@@ -31,9 +31,11 @@ public class EnchantmentListener implements Listener {
         if (item != null && item.getType() == Material.SHIELD) {
             // 방패에 내구성이 붙지 않도록 처리
             if (item.getEnchantments().containsKey(org.bukkit.enchantments.Enchantment.DURABILITY)) {
+                // 모든 인챈트 제거
                 item.removeEnchantments();
                 ItemMeta meta = item.getItemMeta();
                 if (meta != null) {
+                    // 내구성 인챈트를 제거
                     meta.removeEnchant(org.bukkit.enchantments.Enchantment.DURABILITY);
                     item.setItemMeta(meta);
                 }
