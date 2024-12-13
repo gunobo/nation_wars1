@@ -1,11 +1,13 @@
 name: NationWarPlugin
 version: 1.0
 main: com.yourname.nationwar.NationWarPlugin
-api-version: 1.19
+api-version: 1.20.1 // 현재 사용 중인 Minecraft 버전에 맞춤
+
 commands:
-  personalchest: //한국어
-    description: 개인 창고를 엽니다.
-    usage: /개인창고
-  personalchest: //영어
-    description: 개인 창고를 엽니다.
-    usage: /personalchest
+  personalchest:
+    description: 
+      한국어: 개인 창고를 엽니다.
+      영어: Opens your personal chest.
+    usage:
+      한국어: /개인창고
+      영어: /personalchest
