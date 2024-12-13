@@ -3,12 +3,8 @@ package com.yourname.nationwar.listeners;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDispenseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.block.BrewingStand;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BrewingStandListener implements Listener {
 
