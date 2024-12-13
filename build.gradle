@@ -14,7 +14,7 @@ dependencies {
 }
 
 jar {
-    archivesBaseName = 'NationWarPlugin_1nobo'
+    baseName = 'NationWarPlugin_1nobo' // archivesBaseName 대신 baseName 사용
     version = '1.0'
     from('src/main/resources') {
         include 'plugin.yml'
