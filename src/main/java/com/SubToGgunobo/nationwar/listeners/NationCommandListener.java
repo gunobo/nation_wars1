@@ -2,14 +2,16 @@ package com.yourname.nationwar.listeners;
 
 import com.yourname.nationwar.Nation;
 import com.yourname.nationwar.NationManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 public class NationCommandListener implements CommandExecutor {
-    private NationManager nationManager;
+    private final NationManager nationManager;
 
     public NationCommandListener(NationManager nationManager) {
         this.nationManager = nationManager;
@@ -29,7 +31,7 @@ public class NationCommandListener implements CommandExecutor {
             return true;
         }
 
-        Nation nation = nationManager.getNation("국가명"); // 현재 플레이어가 속한 국가를 가져오는 로직 추가 필요
+        Nation nation = getNationOfPlayer(player); // 현재 플레이어가 속한 국가를 가져오는 로직
 
         switch (args[0].toLowerCase()) {
             case "스폰설정":
@@ -49,8 +51,8 @@ public class NationCommandListener implements CommandExecutor {
                     player.sendMessage("스폰 위치가 설정되어 있지 않습니다.");
                 }
                 break;
-                
-                case "창고":
+
+            case "창고":
                 if (nation != null) {
                     Inventory inventory = Bukkit.createInventory(player, 27, nation.getName() + "의 국가 창고"); // 27 슬롯 (3줄)
                     player.openInventory(inventory);
@@ -68,5 +70,15 @@ public class NationCommandListener implements CommandExecutor {
         }
 
         return true;
+    }
+
+    private Nation getNationOfPlayer(Player player) {
+        // 플레이어가 속한 국가를 찾는 로직 (예시)
+        for (Nation nation : nationManager.getNations().values()) {
+            if (nation.getMembers().containsKey(player.getName())) {
+                return nation; // 플레이어가 속한 국가 반환
+            }
+        }
+        return null; // 국가에 속하지 않음
     }
 }
